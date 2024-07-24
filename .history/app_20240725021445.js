@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+console.log("Current directory:", __dirname);
 
 const Listing = require("../models/listing.js");
 

@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
-const Listing = require("../models/listing.js");
+
+
+const listing = require("../models/listing.js");
 
 main().then(() => {
     console.log("connected to db");
@@ -21,10 +23,10 @@ app.get("/", (req, res) => {
 
 // ------test listing-----------
 app.get("/testListing", async (req, res) => {
-    let sampling = new Listing({
+    let sampling = new listing({
         title: "my new home",
         description: "this is DN house",
-        Price: 20000000,
+        price: 20000000,
         location: "BIHAR",
         Country: "INDIA",
     });
