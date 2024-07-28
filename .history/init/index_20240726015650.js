@@ -1,6 +1,6 @@
 const mongoose=require("mongoose");
-const initdata=require("./data.js");
-const Listing = require("../models/listing.js");
+const initdb=require("./data.js");
+const Listing=require("./models/listing.js");
 
 main().then(() => {
     console.log("connected to db");
@@ -14,7 +14,7 @@ async function main() {
 
 const initdb= async ()=>{
    await Listing.deleteMany({});
-    await Listing.insertMany(initdata.data);
+    await Listing.insertMany(initdb.data);
     console.log("data was initalised");
 }
 initdb();

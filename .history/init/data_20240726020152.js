@@ -160,4 +160,4 @@ const sample = [
     country: "India"
   }
 ];
-module.exports = {data:sample};
+module.exports ={data:sample};
