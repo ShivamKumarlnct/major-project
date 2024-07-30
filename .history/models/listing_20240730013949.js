@@ -10,13 +10,13 @@ const listingSchema = new Schema({
         type: String,
     },
     
-    price: {
+    Price: {
         type: Number,
     },
     location: {
         type: String,
     },
-    country: {
+    Country: {
         type: String,
     },
     image: {

@@ -10,7 +10,7 @@ const listingSchema = new Schema({
         type: String,
     },
     
-    price: {
+    Price: {
         type: Number,
     },
     location: {
