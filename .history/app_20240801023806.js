@@ -55,14 +55,14 @@ app.get("/listings/:id", async (req, res) => {
 app.get("/listings/:id/edit", async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
-    res.render("listing/edit.ejs", { listing });
+    res.render("listings/edit.ejs", { listing });
 });
 
 // Update
 app.put("/listings/:id", async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, {...req.body.listing});
-    res.redirect("/listings");
+    res.redirect(`/listings/${id}`);
 });
 
 

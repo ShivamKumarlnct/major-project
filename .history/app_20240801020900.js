@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 
 const Listing = require("./models/listing.js");
 const path=require("path");
-const methodoverride = require('method-override');
-app.use(methodoverride('_method'));
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
 
 
 
@@ -52,19 +52,17 @@ app.get("/listings/:id", async (req, res) => {
 });
 
 // edit
-app.get("/listings/:id/edit", async (req, res) => {
-    let { id } = req.params;
+app.get("/listings/:id/edit", async (req,res)=>{
+     let { id } = req.params;
     const listing = await Listing.findById(id);
-    res.render("listing/edit.ejs", { listing });
-});
-
-// Update
-app.put("/listings/:id", async (req, res) => {
-    let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, {...req.body.listing});
-    res.redirect("/listings");
-});
-
+    res.render("listing/edit.ejs",{listing});
+})
+// update
+app.put("/listings/:id",async (req,res)=>{
+         let { id } = req.params;
+ await Listing.findByIdAndUpdate(id,...req.body.listing);
+ res.redirect("/listings");
+})
 
 
 // ------test listing-----------
