@@ -34,10 +34,8 @@ app.get("/listings",async (req,res)=>{
 app.get("/listings/new", (req, res) => {
     res.render("listing/new.ejs");
 });
-app.post("/listings", async (req,res)=>{
-  const newlisting=  new Listing(req.body.listing);
-  await newlisting.save();
-  res.redirect("/listings");
+app.post("/listings", async(req,res)=>{
+
 })
 
 // show route

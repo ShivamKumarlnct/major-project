@@ -31,14 +31,9 @@ app.get("/listings",async (req,res)=>{
 
 // new create
 
-app.get("/listings/new", (req, res) => {
+app.get("/listings/new",(req,res)=>{
     res.render("listing/new.ejs");
 });
-app.post("/listings", async (req,res)=>{
-  const newlisting=  new Listing(req.body.listing);
-  await newlisting.save();
-  res.redirect("/listings");
-})
 
 // show route
 app.get("/listings/:id", async (req, res) => {
@@ -64,7 +59,6 @@ app.get("/listings/:id", async (req, res) => {
 // });
 
 // --------port---------------
-
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
 });

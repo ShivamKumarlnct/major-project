@@ -17,28 +17,15 @@ async function main() {
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({ extended: true }));
-
 // ------server-open-----------
 app.get("/", (req, res) => {
     res.send("hi i m server");
 });
-
 // ---index.ejs-----------
 app.get("/listings",async (req,res)=>{
    const alllistings= await Listing.find({});
    res.render("listing/index.ejs",{alllistings});
 });
-
-// new create
-
-app.get("/listings/new", (req, res) => {
-    res.render("listing/new.ejs");
-});
-app.post("/listings", async (req,res)=>{
-  const newlisting=  new Listing(req.body.listing);
-  await newlisting.save();
-  res.redirect("/listings");
-})
 
 // show route
 app.get("/listings/:id", async (req, res) => {
@@ -47,6 +34,14 @@ app.get("/listings/:id", async (req, res) => {
     // console.log(listing);
     res.render("listing/show.ejs", { listing });
 });
+
+// new create
+
+app.post("/")
+
+
+
+
 
 
 // ------test listing-----------
@@ -64,7 +59,6 @@ app.get("/listings/:id", async (req, res) => {
 // });
 
 // --------port---------------
-
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
 });

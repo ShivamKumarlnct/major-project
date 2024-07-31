@@ -1,12 +1,11 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-
 const Listing = require("./models/listing.js");
-const path=require("path");
+const path = require("path");
 
 main().then(() => {
-    console.log("connected to db");
+    console.log("Connected to DB");
 }).catch((err) => {
     console.log(err);
 });
@@ -14,40 +13,41 @@ main().then(() => {
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/wander');
 }
-app.set("view engine","ejs");
-app.set("views",path.join(__dirname,"views"));
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 
 // ------server-open-----------
 app.get("/", (req, res) => {
-    res.send("hi i m server");
+    res.send("Hi, I am server");
 });
 
 // ---index.ejs-----------
-app.get("/listings",async (req,res)=>{
-   const alllistings= await Listing.find({});
-   res.render("listing/index.ejs",{alllistings});
+app.get("/listings", async (req, res) => {
+    const alllistings = await Listing.find({});
+    res.render("listing/index.ejs", { alllistings });
 });
 
 // new create
-
 app.get("/listings/new", (req, res) => {
     res.render("listing/new.ejs");
 });
-app.post("/listings", async (req,res)=>{
-  const newlisting=  new Listing(req.body.listing);
-  await newlisting.save();
-  res.redirect("/listings");
-})
+
+// POST route for creating a new listing
+app.post("/listings", async (req, res) => {
+    const { title, subtitle, description, price, location, country, image } = req.body;
+    const newListing = new Listing({ title, subtitle, description, price, location, country, image });
+    await newListing.save();
+    res.redirect("/listings");
+});
 
 // show route
 app.get("/listings/:id", async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
-    // console.log(listing);
     res.render("listing/show.ejs", { listing });
 });
-
 
 // ------test listing-----------
 // app.get("/testListing", async (req, res) => {
@@ -64,7 +64,6 @@ app.get("/listings/:id", async (req, res) => {
 // });
 
 // --------port---------------
-
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
 });
