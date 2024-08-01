@@ -6,7 +6,7 @@ const Listing = require("./models/listing.js");
 const path=require("path");
 const methodoverride = require('method-override');
 app.use(methodoverride('_method'));
-const ejsMate=require("ejs-mate");
+const ejsmate=require
 
 
 main().then(() => {
@@ -21,7 +21,6 @@ async function main() {
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({ extended: true }));
-app.engine('ejs',ejsMate);
 // ------server-open-----------
 app.get("/", (req, res) => {
     res.send("hi i m server");
