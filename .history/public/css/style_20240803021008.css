@@ -1,0 +1,80 @@
+/* body{
+    background-color: aqua;
+} */
+ /* Basic Navbar Styles */
+.navbar {
+    background-color: #343a40; /* Dark background */
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.navbar-brand:hover {
+    color: #cccccc;
+}
+
+/* Navbar Links */
+.nav-link {
+    color: #ffffff;
+    padding: 10px 15px;
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+.nav-link:hover {
+    color: #00aaff; /* Link hover color */
+}
+
+/* Active Link */
+.nav-link.active {
+    color: #00aaff;
+    font-weight: bold;
+}
+
+/* Disabled Link */
+.nav-link {
+    color: #6c757d;
+}
+
+/* Toggler Button */
+.navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+.navbar-toggler-icon {
+    background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath stroke="rgba%28255, 255, 255, 0.7%29" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/%3E%3C/svg%3E');
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991px) {
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .nav-link {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .nav-link {
+        padding: 7px 8px;
+        font-size: 0.85rem;
+    }
+}

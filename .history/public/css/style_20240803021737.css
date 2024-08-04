@@ -12,7 +12,7 @@
     display: flex;
     align-items: center;
 }
-
+.fa-opencart
 .navbar-brand i {
     margin-right: 8px;
     color: #007bff; /* Brand icon color */
@@ -25,7 +25,7 @@
 
 /* Navbar Links */
 .nav-link {
-    color: #140f0f;
+    color: #555;
     padding: 8px 15px;
     font-size: 1rem;
     font-weight: 500;
@@ -40,7 +40,10 @@
 }
 
 /* Active Link */
-
+.nav-link.active {
+    color: #0056b3;
+    font-weight: bold;
+}
 
 /* Toggler Button */
 .navbar-toggler {
@@ -66,7 +69,6 @@
     }
 
     .nav-link {
-        color: #140f0f !important;
         padding: 10px;
         font-size: 0.95rem;
     }
@@ -82,7 +84,6 @@
     }
 
     .nav-link {
-        color: #140f0f;
         padding: 8px 10px;
         font-size: 0.9rem;
     }

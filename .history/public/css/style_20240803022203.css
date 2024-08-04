@@ -40,7 +40,10 @@
 }
 
 /* Active Link */
-
+.nav-link {
+    color: #0056b3;
+    font-weight: bold;
+}
 
 /* Toggler Button */
 .navbar-toggler {
@@ -66,7 +69,7 @@
     }
 
     .nav-link {
-        color: #140f0f !important;
+        color: #140f0f;
         padding: 10px;
         font-size: 0.95rem;
     }
@@ -82,7 +85,6 @@
     }
 
     .nav-link {
-        color: #140f0f;
         padding: 8px 10px;
         font-size: 0.9rem;
     }

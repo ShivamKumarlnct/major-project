@@ -1,0 +1,63 @@
+/* Navbar Container */
+.navbar {
+    height: 5rem;
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative; /* Ensure the navbar stays in place */
+}
+
+/* Navbar Toggler */
+.navbar-toggler {
+    border: none;
+    outline: none;
+    background-color: #007bff;
+    padding: 8px 10px;
+    border-radius: 5px;
+}
+
+/* Ensure navbar stays the same height when toggled */
+.navbar-collapse {
+    max-height: 0; /* Prevent height change */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.navbar-collapse.show {
+    max-height: 500px; /* Set max height when open */
+}
+
+/* Adjust container for no movement on hover */
+.nav-link {
+    display: inline-block;
+    color: #140f0f;
+    padding: 8px 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    position: relative;
+}
+
+.nav-link:hover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #007bff;
+    transform: scaleX(1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #007bff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
