@@ -1,0 +1,33 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="form-container">
+    <form method="POST" action="/listings">
+        <div class="form-group">
+            <label for="title" class="form-label">Enter Title</label>
+            <input placeholder="Hotel Name" id="title" name="listing[title]" placeholder="Title" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="description" class="form-label">Enter Description</label>
+            <textarea id="description" name="listing[description]" class="form-control"placeholder="Description"></textarea>
+        </div>
+        <div class="form-group form-row">
+            <div class="form-group-inline">
+                <label for="price" class="form-label">Enter Price</label>
+                <input aria-placeholder="" id="price" name="listing[price]" placeholder="Price" class="form-control">
+            </div>
+            <div class="form-group-inline">
+                <label for="country" class="form-label">Enter Country</label>
+                <input type="text" id="country" name="listing[country]" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="location" class="form-label">Enter Location</label>
+            <input type="text" id="location" name="listing[location]" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="image" class="form-label">Image URL</label>
+            <input type="text" id="image" name="listing[image]" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-dark">Add</button>
+    </form>
+</div>
