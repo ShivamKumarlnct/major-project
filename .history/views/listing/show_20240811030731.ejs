@@ -1,0 +1,65 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <h3 class="text-center mb-4 animated-title">Listing Details:</h3>
+                
+                <div class="card mb-4">
+                    <img src="<%= listing.image %>" class="card-img-top show-img" alt="listing_image">
+                    <div class="card-body text-center">
+                        <p class="card-text animated-title"><%= listing.title %></p>
+                    </div>
+                </div>
+
+                <ul class="list-unstyled mb-4">
+                    <li>Title: <%= listing.title %></li>
+                    <li>Description: <%= listing.description %></li>
+                    <li>Price: &#8377; <%= listing.price.toLocaleString("en-IN") %></li>
+                    <li>Location: <%= listing.location %></li>
+                    <li>Country: <%= listing.country %></li>
+                </ul>
+
+                <div class="text-center d-flex justify-content-center align-items-center gap-3">
+                    <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary animated-button">Edit</a>
+                    <form method="post" action="/listing/<%= listing._id %>?_method=DELETE" class="d-inline">
+                        <button type="submit" class="btn btn-danger animated-button">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<style>
+  .show-img {
+    width: calc(100% + 5rem); /* Increase width by 5rem */
+    height: calc(200px + 5rem); /* Increase height by 5rem */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    margin: 0 auto; /* Center the image horizontally */
+  }
+
+  .animated-title {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+    width: 30rem;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animated-button {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .animated-button:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+  }
+</style>

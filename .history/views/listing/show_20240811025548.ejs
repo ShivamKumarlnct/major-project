@@ -1,0 +1,43 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+    <h3>Listing Details:</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="<%= listing.image %>" class="card-img-top custom-img" alt="listing_image">
+                <div class="card-body">
+                    <p class="card-text"><%= listing.title %></p>
+                </div>
+            </div>
+        </div>
+        <!-- Repeat the card as needed -->
+    </div>
+    <ul>
+        <li>Title: <%= listing.title %></li>
+        <li>Description: <%= listing.description %></li>
+        <li>Price: &#8377; <%= listing.price.toLocaleString("en-IN") %></li>
+        <li>Location: <%= listing.location %></li>
+        <li>Country: <%= listing.country %></li>
+    </ul>
+    <br><br><br>
+   
+    <button><a href="/listings/<%= listing._id%>/edit">Edit</a></button>
+    <br>
+    <form method="post" action="/listing/<%=listing._id %>?_method=DELETE">
+        <button>Delete</button>
+    </form>
+    <br>
+</body>
+
+<style>
+  .card-img-top.custom-img {
+    width: calc(100% + 5rem); /* Increase the width by 5rem */
+    height: calc(200px + 5rem); /* Increase the height by 5rem (200px is the default height set before) */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    margin-bottom: 0.5rem; /* Space between the image and the card body */
+    display: block; /* Ensures the image is displayed as a block element */
+    margin-left: auto; /* Center the image horizontally */
+    margin-right: auto; /* Center the image horizontally */
+  }
+</style>

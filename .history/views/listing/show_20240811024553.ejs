@@ -1,0 +1,27 @@
+<% layout("/layouts/boilerplate") %>
+
+<body>
+    <h3>Listing Details:</h3>
+    <div class="card">
+  <img src="" class="" alt="listing_image">
+  <div class="card-body">
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+</div>
+    </div>
+    <ul>
+        <li>Title: <%= listing.title %></li>
+        <li>Description: <%= listing.description %></li>
+        <li>Price: &#8377; <%= listing.price.toLocaleString("en-IN") %></li>
+        <li>Location: <%= listing.location %></li>
+        <li>Country: <%= listing.country %></li>
+    </ul>
+   <br><br><br>
+   
+   
+    <button><a href="/listings/<%= listing._id%>/edit">Edit</a></button>
+    <br>
+    <form method="post"action="/listing/<%=listing._id %>?_method=DELETE">
+        <button>delete</button>
+    </form>
+    <br>
+</body>

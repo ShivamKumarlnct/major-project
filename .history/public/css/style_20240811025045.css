@@ -320,9 +320,25 @@ textarea.form-control {
     }
 }
 
-.show-img{
-    height: 30vh;
-}.btns{
-    display: flex;
-    
-}
+.card {
+      border: 1px solid #ddd; /* Light border around the card */
+      border-radius: 0.5rem; /* Rounded corners */
+      overflow: hidden; /* Ensures content doesn't overflow */
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
+      margin-bottom: 1.5rem; /* Space between cards */
+    }
+    .card:hover {
+      transform: scale(1.05); /* Slight zoom effect on hover */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+    }
+    .card img {
+      width: 100%; /* Ensures the image fills the card width */
+      height: 200px; /* Fixed height for consistent card size */
+      object-fit: cover; /* Ensures image covers the area without distortion */
+    }
+    .card-body {
+      padding: 1rem; /* Padding inside the card body */
+    }
+    .card-text {
+      margin: 0; /* Remove default margin */
+    }
