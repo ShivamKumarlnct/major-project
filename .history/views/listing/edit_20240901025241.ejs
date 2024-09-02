@@ -1,0 +1,36 @@
+<% layout("/layouts/boilerplate") %>
+
+<form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="container mt-4" >
+    <h3 class="mb-4">Enter Details</h3>
+    <div class="mb-3"novalidate class="needs-validation" >
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" name="listing[title]" id="title" value="<%= listing.title %>" required/>
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" name="listing[description]" id="description"><%= listing.description %></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" class="form-control" name="listing[price]" id="price" value="<%= listing.price %>">
+    </div>
+
+    <div class="mb-3">
+        <label for="country" class="form-label">Country</label>
+        <input type="text" class="form-control" name="listing[country]" id="country" value="<%= listing.country %>">
+    </div>
+
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text" class="form-control" name="listing[location]" id="location" value="<%= listing.location %>">
+    </div>
+
+    <div class="mb-3">
+        <label for="image" class="form-label">Image URL</label>
+        <input type="text" class="form-control" name="listing[image]" id="image" value="<%= listing.image %>">
+    </div>
+    <button type="submit" class="btn btn-dark">Edit</button>
+    <br>
+</form>
