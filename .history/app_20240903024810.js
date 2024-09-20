@@ -98,7 +98,7 @@ app.delete("/listing/:id",async(req,res)=>{
 // create error handler
 
 app.use((err,req,res,next)=>{
-    res.send("something-error");
+    res.send("error");
 });
 
 // --------port---------------

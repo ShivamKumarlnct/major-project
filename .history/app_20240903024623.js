@@ -7,7 +7,7 @@ const path=require("path");
 const methodoverride = require('method-override');
 app.use(methodoverride('_method'));
 const ejsMate=require("ejs-mate");
-const wrapfunc=require("./utils/wrapfunc.js");
+const wrapAsync=require("/utils/wrapfunc.js");
 
 
 main().then(() => {
@@ -43,13 +43,16 @@ app.get("/listings/new", (req, res) => {
     res.render("listing/new.ejs");
 });
 
-app.post("/listings", wrapfunc(async (req,res,next)=>{
+app.post("/listings", async (req,res,next)=>{
+    try{
  const newlisting=  new Listing(req.body.listing);
   await newlisting.save();
   res.redirect("/listings");
-    
+    }catch(err){
+        next(err);
+    }
  
-}))
+})
 
 // show route
 app.get("/listings/:id", async (req, res) => {
@@ -98,7 +101,7 @@ app.delete("/listing/:id",async(req,res)=>{
 // create error handler
 
 app.use((err,req,res,next)=>{
-    res.send("something-error");
+    res.send("error");
 });
 
 // --------port---------------

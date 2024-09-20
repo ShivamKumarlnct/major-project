@@ -47,7 +47,9 @@ app.post("/listings", wrapfunc(async (req,res,next)=>{
  const newlisting=  new Listing(req.body.listing);
   await newlisting.save();
   res.redirect("/listings");
-    
+    }catch(err){
+        next(err);
+    }
  
 }))
 
@@ -98,7 +100,7 @@ app.delete("/listing/:id",async(req,res)=>{
 // create error handler
 
 app.use((err,req,res,next)=>{
-    res.send("something-error");
+    res.send("error");
 });
 
 // --------port---------------
