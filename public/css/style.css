@@ -92,89 +92,92 @@
     }
 }
 /* footer */
-/* Ensure the footer stays at the bottom */
 
-/* Existing footer styles */
-footer {
-  background-color: #2c3e50;
-  color: #ecf0f1;
-  padding: 20px;
-  text-align: center;
+
+  
+  
+  footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 15.5rem;
+  }
+  
+  .f-info {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .f-info-socials {
+    margin-bottom: 10px;
+  }
+  
+  .f-info-socials i {
+    font-size: 24px;
+    margin: 0 10px;
+    transition: color 0.3s;
+  }
+  
+  .f-info-socials i:hover {
+    color: #3498db; /* Color on hover */
+  }
+  
+  .f-info-links {
+    margin-top: 10px;
+  }
+  
+  .f-info-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 16px;
+    transition: color 0.3s;
+  }
+  
+  .f-info-links a:hover {
+    color: #3498db; /* Color on hover */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .f-info {
+      padding: 10px;
+    }
+  
+    .f-info-socials i {
+      font-size: 20px;
+      margin: 0 8px;
+    }
+  
+    .f-info-links a {
+      font-size: 14px;
+      margin: 0 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    footer {
+      padding: 15px;
+    }
+  
+    .f-info-socials i {
+      font-size: 18px;
+      margin: 0 6px;
+    }
+  
+    .f-info-links a {
+      font-size: 12px;
+      display: block;
+      margin: 5px 0;
+    }
+  }
   
 
-}
-
-.f-info {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px;
-}
-
-.f-info-socials {
-  margin-bottom: 10px;
-}
-
-.f-info-socials i {
-  font-size: 24px;
-  margin: 0 10px;
-  transition: color 0.3s;
-}
-
-.f-info-socials i:hover {
-  color: #3498db; /* Change to a color of your choice */
-}
-
-.f-info-links {
-  margin-top: 10px;
-}
-
-.f-info-links a {
-  color: #ecf0f1;
-  text-decoration: none;
-  margin: 0 15px;
-  font-size: 16px;
-  transition: color 0.3s;
-}
-
-.f-info-links a:hover {
-  color: #3498db; /* Change to a color of your choice */
-}
-
-@media (max-width: 768px) {
-  .f-info {
-    padding: 10px;
-  }
-
-  .f-info-socials i {
-    font-size: 20px;
-    margin: 0 8px;
-  }
-
-  .f-info-links a {
-    font-size: 14px;
-    margin: 0 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  footer {
-    padding: 15px;
-  }
-
-  .f-info-socials i {
-    font-size: 18px;
-    margin: 0 6px;
-  }
-
-  .f-info-links a {
-    font-size: 12px;
-    display: block;
-    margin: 5px 0;
-  }
-}
-
 /* card */
-/* Base styling for the page */
 h1 {
     font-family: Arial, sans-serif;
     color: #333;
