@@ -31,14 +31,16 @@ app.use(express.static(path.join(__dirname,"/public")));
 app.get("/", (req, res) => {
     res.send("hi i m server");
 });
-const validateListing=(req,res,next)=>{
-    let {error} =listingSchema.validate(req.body);
-  if(error){
-    throw new Expresserror(404,result.error);
-  }else{
-    next();
-  }
-}
+const validateListing = (req, res, next) => {
+    const { error } = listingSchema.validate(req.body);
+    if (error) {
+        const message = error.details.map(err => err.message).join(', ');
+        throw new Expresserror(400, message);
+    } else {
+        next();
+    }
+};
+
 
 // ---index.ejs-----------
 app.get("/listings",wrapfunc(async (req,res)=>{
@@ -61,10 +63,8 @@ app.post("/listings",validateListing, wrapfunc(async (req,res,next)=>{
 }))
 
 // show route
-app.get("/listings/:id",wrapfunc( async (req, res) => {
-    // if(!req.body.listing){
-    //     throw new Expresserror(400,"send valid for listing!")
-    // }
+app.get("/listings/:id",validateListing,wrapfunc( async (req, res) => {
+   
     let { id } = req.params;
     const listing = await Listing.findById(id);
     // console.log(listing);
