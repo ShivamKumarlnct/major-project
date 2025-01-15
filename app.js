@@ -61,13 +61,12 @@ app.post("/listings",validateListing, wrapfunc(async (req,res,next)=>{
   res.redirect("/listings");
  
 }))
-
+ 
 // show route
 app.get("/listings/:id",validateListing,wrapfunc( async (req, res) => {
    
     let { id } = req.params;
     const listing = await Listing.findById(id);
-    // console.log(listing);
     res.render("listing/show.ejs", { listing });
 }));
 
