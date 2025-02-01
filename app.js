@@ -10,6 +10,9 @@ const ejsMate=require("ejs-mate");
 const wrapfunc=require("./utils/wrapfunc.js");
 const Expresserror=require("./utils/Expresserror.js")
 const listingSchema=require("./schema.js");
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); 
+
 
 main().then(() => {
     console.log("connected to db");
@@ -32,7 +35,7 @@ app.get("/", (req, res) => {
     res.send("hi i m server");
 });
 const validateListing = (req, res, next) => {
-    const { error } = listingSchema.validate(req.body);
+    const { error } = listingSchema.validate(req.body.listing); 
     if (error) {
         const message = error.details.map(err => err.message).join(', ');
         throw new Expresserror(400, message);
@@ -54,12 +57,11 @@ app.get("/listings/new",wrapfunc(async (req, res) => {
     res.render("listing/new.ejs");
 }));
 
-app.post("/listings",validateListing, wrapfunc(async (req,res,next)=>{
- const newlisting=  new Listing(req.body.listing);
-
+app.post("/listings",wrapfunc(async (req,res,next)=>{
+ const newlisting=  new Listing(req.body.listing); 
+ 
   await newlisting.save();
   res.redirect("/listings");
- 
 }))
  
 // show route
@@ -119,6 +121,6 @@ app.use((err, req, res, next) => {
 
 // --------port---------------
 
-app.listen(8080, () => {
-    console.log("Server is running on port 8080");
+app.listen(8000, () => {
+    console.log("Server is running on port 8000");
 });
