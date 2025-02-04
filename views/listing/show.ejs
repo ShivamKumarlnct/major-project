@@ -2,14 +2,12 @@
 
 <body>
     <div class="container">
-        <!-- Title Section -->
         <div class="row text-center mb-4">
             <div class="col-12">
                 <h5 class="card-title"><b><%= listing.title %></b></h5>
             </div>
         </div>
 
-        <!-- Card Section -->
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
@@ -24,7 +22,6 @@
             </div>
         </div>
 
-        <!-- Button Section -->
         <div class="row justify-content-center mt-4">
             <div class="col-auto">
                 <a href="/listings/<%= listing._id%>/edit" class="btn btn-dark">Edit</a>
@@ -36,7 +33,6 @@
             </div>
         </div>
 
-        <!-- Review Section -->
         <br>
         <div class="col-8 offset-3">
             <h4>Leave a Review</h4>
@@ -64,8 +60,8 @@
                         <p class="card-text"><%=review.comment%></p>
                         <p class="card-text"><%=review.rating%> Stars</p>
                     </div>
-                    <form>
-                        <buttonc class="btn btn-sm btn-dark"></button>
+                    <form class="mb-3" method="POST" action="/listings/<%=listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                        <button class="btn btn-sm btn-dark">Delete</button>
                     </form>
                 </div>
           <% } %>

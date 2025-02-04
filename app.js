@@ -10,6 +10,7 @@ const ejsMate=require("ejs-mate");
 const wrapfunc=require("./utils/wrapfunc.js");
 const Expresserror=require("./utils/Expresserror.js")
 const {listingSchema,reviewSchema}=require("./schema.js");
+const wrapAsync = require("./utils/wrapfunc.js");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); 
 
@@ -116,7 +117,12 @@ app.post("/listings/:id/reviews",validateReview,async(req,res)=>{
    
    res.redirect(`/listings/${listing._id}`);
 })
-
+app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
+        let{id,reviewId}=req.params;
+        await Listing.findByIdAndUpdate(id ,{$pull:{reviews:reviewId}});
+        await Review.findByIdAndDelete(reviewId);
+        res.redirect(`/listings/${id}`);
+}))
 // ------test listing-----------
 // app.get("/testListing", async (req, res) => {
 //     let sampling = new Listing({
