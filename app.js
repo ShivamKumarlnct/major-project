@@ -1,53 +1,44 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Review=require("./models/review.js");
-const Listing = require("./models/listing.js");
-const path=require("path");
+const path = require("path");
 const methodoverride = require('method-override');
-app.use(methodoverride('_method'));
-const ejsMate=require("ejs-mate");
-const wrapfunc=require("./utils/wrapfunc.js");
-const Expresserror=require("./utils/Expresserror.js")
-const {listingSchema,reviewSchema}=require("./schema.js");
+const ejsMate = require("ejs-mate");
+
+const Review = require("./models/review.js");
+const Listing = require("./models/listing.js");
 const wrapAsync = require("./utils/wrapfunc.js");
+const Expresserror = require("./utils/Expresserror.js");
+const { listingSchema, reviewSchema } = require("./schema.js");
+const listings = require("./routes/listing.js");
+
+app.use(methodoverride('_method'));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); 
-
-
+app.use(express.json());
+app.engine('ejs', ejsMate);
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "/public")));
 
 main().then(() => {
-    console.log("connected to db");
-}).catch((err) => {
+    console.log("Connected to DB");
+}).catch(err => {
     console.log(err);
 });
 
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/wander');
 }
-app.set("view engine","ejs");
-app.set("views",path.join(__dirname,"views"));
-app.use(express.urlencoded({ extended: true }));
-app.engine('ejs',ejsMate);
-app.use(express.static(path.join(__dirname,"/public")));
 
-
-// ------server-open-----------
+// Home Route
 app.get("/", (req, res) => {
-    res.send("hi i m server");
+    res.send("Hi, I'm the server");
 });
-const validateListing = (req, res, next) => {
-    const { error } = listingSchema.validate(req.body.listing); 
-    if (error) {
-        const message = error.details.map(err => err.message).join(', ');
-        throw new Expresserror(400, message);
-    } else {
-        next();
-    }
-};
+
+
 
 const validateReview = (req, res, next) => {
-    const { error } = reviewSchema.validate(req.body.listing); 
+    const { error } = reviewSchema.validate(req.body); 
     if (error) {
         const message = error.details.map(err => err.message).join(', ');
         throw new Expresserror(400, message);
@@ -56,99 +47,39 @@ const validateReview = (req, res, next) => {
     }
 };
 
+// Use Listings Router
+app.use("/listings", listings);
 
-// ---index.ejs-----------
-app.get("/listings",wrapfunc(async (req,res)=>{
-   const alllistings= await Listing.find({});
-   res.render("listing/index.ejs",{alllistings});
+// Create Review
+app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
+    const listing = await Listing.findById(req.params.id);
+    const newReview = new Review(req.body.review);
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    res.redirect(`/listings/${listing._id}`);
 }));
 
-// new create
-
-app.get("/listings/new",wrapfunc(async (req, res) => {
-    res.render("listing/new.ejs");
+// Delete Review
+app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/listings/${id}`);
 }));
 
-app.post("/listings",wrapfunc(async (req,res,next)=>{
- const newlisting=  new Listing(req.body.listing); 
- 
-  await newlisting.save();
-  res.redirect("/listings");
-}))
- 
-// show route
-app.get("/listings/:id",validateListing,wrapfunc( async (req, res) => {
-   
-    let { id } = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
-    res.render("listing/show.ejs", { listing });
-}));
-
-// edit
-app.get("/listings/:id/edit", wrapfunc(async (req, res) => {
-    let { id } = req.params;
-    const listing = await Listing.findById(id);
-    res.render("listing/edit.ejs", { listing });
-}));
-
-// Update
-app.put("/listings/:id",wrapfunc( async (req, res) => {
-    let { id } = req.params;
-    await Listing.findByIdAndUpdate(id, {...req.body.listing});
-    res.redirect("/listings");
-}));
-// delete
-app.delete("/listing/:id", wrapfunc(async (req, res) => {
-    let { id } = req.params;
-    await Listing.findByIdAndDelete(id);  
-    res.redirect("/listings");
-}));
-
-
-// reviews
-app.post("/listings/:id/reviews",validateReview,async(req,res)=>{
-  let listing=await Listing.findById(req.params.id);
-  let newReview=new Review(req.body.review);
-   listing.reviews.push(newReview);
-
-   await newReview.save();
-   await listing.save();
-   console.log(newReview);
-   
-   res.redirect(`/listings/${listing._id}`);
-})
-app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
-        let{id,reviewId}=req.params;
-        await Listing.findByIdAndUpdate(id ,{$pull:{reviews:reviewId}});
-        await Review.findByIdAndDelete(reviewId);
-        res.redirect(`/listings/${id}`);
-}))
-// ------test listing-----------
-// app.get("/testListing", async (req, res) => {
-//     let sampling = new Listing({
-//         title: "my new home",
-//         description: "this is DN house",
-//         Price: 20000000,
-//         location: "BIHAR",
-//         Country: "INDIA",
-//     });
-//     await sampling.save();
-//     console.log("sampling was done");
-//     res.send("Done");
-// });
-// create error handler
-app.all("*",(req,res,next)=>{
-next(new Expresserror(404,"page not found"));
-})
-
-app.use((err, req, res, next) => {
-    let { status = 500, message = "page not found" } = err; 
-    res.status(status).render("error.ejs", { message }); 
+// 404 Error Handling
+app.all("*", (req, res, next) => {
+    next(new Expresserror(404, "Page not found"));
 });
 
+// General Error Handling
+app.use((err, req, res, next) => {
+    const { status = 500, message = "Something went wrong" } = err;
+    res.status(status).render("error.ejs", { message });
+});
 
-// --------port---------------
-
-app.listen(8000, () => {
-    console.log("Server is running on port 8000");
+// Server Listening
+app.listen(8080, () => {
+    console.log("Server is running on port 8080");
 });
