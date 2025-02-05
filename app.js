@@ -11,6 +11,7 @@ const wrapAsync = require("./utils/wrapfunc.js");
 const Expresserror = require("./utils/Expresserror.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
 const listings = require("./routes/listing.js");
+const reviews=require("./routes/review.js");
 
 app.use(methodoverride('_method'));
 app.use(express.urlencoded({ extended: true }));
@@ -37,36 +38,13 @@ app.get("/", (req, res) => {
 
 
 
-const validateReview = (req, res, next) => {
-    const { error } = reviewSchema.validate(req.body); 
-    if (error) {
-        const message = error.details.map(err => err.message).join(', ');
-        throw new Expresserror(400, message);
-    } else {
-        next();
-    }
-};
+
 
 // Use Listings Router
 app.use("/listings", listings);
+app.use("/listings/:id/reviews",reviews);
 
-// Create Review
-app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
-    const listing = await Listing.findById(req.params.id);
-    const newReview = new Review(req.body.review);
-    listing.reviews.push(newReview);
-    await newReview.save();
-    await listing.save();
-    res.redirect(`/listings/${listing._id}`);
-}));
 
-// Delete Review
-app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
-    const { id, reviewId } = req.params;
-    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/listings/${id}`);
-}));
 
 // 404 Error Handling
 app.all("*", (req, res, next) => {
