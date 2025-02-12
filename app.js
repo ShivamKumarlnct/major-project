@@ -31,7 +31,6 @@ async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/wander');
 }
 
-
 // use session
 
 const sessionOption = {
@@ -51,7 +50,6 @@ app.get("/", (req, res) => {
     res.send("Hi, I'm the server");
 });
 
-
 app.use(session(sessionOption));
 app.use(flash());
 
@@ -62,14 +60,9 @@ app.use((req, res, next) => {
 });
 
 
-
-
-
-
 // Use Listings Router
 app.use("/listings", listings);
 app.use("/listings/:id/reviews",reviews);
-
 
 
 // 404 Error Handling

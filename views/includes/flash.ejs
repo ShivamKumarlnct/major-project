@@ -1,0 +1,78 @@
+<style>
+    /* Flash Message Container */
+    .custom-alert {
+        font-size: 1rem;
+        font-weight: bold;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+        padding: 15px 20px;
+        margin: 20px auto;
+        width: 50%;
+        position: relative;
+        animation: fadeIn 0.6s ease-in-out, slideDown 0.8s ease-in-out;
+    }
+
+    /* Success Alert */
+    .alert-success {
+        background: linear-gradient(135deg, #28a745, #1e7e34);
+        color: #fff;
+        border: none;
+    }
+
+    /* Error Alert */
+    .alert-danger {
+        background: linear-gradient(135deg, #dc3545, #a71d2a);
+        color: #fff;
+        border: none;
+    }
+
+    /* Close Button */
+    .btn-close {
+        position: absolute;
+        top: 12px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        color: white;
+        cursor: pointer;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    .btn-close:hover {
+        opacity: 0.7;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+        from { transform: translateY(-20px); }
+        to { transform: translateY(0); }
+    }
+</style>
+
+<% if (success && success.length) { %>
+    <div class="alert alert-success custom-alert alert-dismissible fade show" role="alert">
+        <%= success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <i class="fas fa-times-circle"></i> <!-- FontAwesome close icon -->
+        </button>
+    </div>
+<% } %>
+
+<% if (error && error.length) { %>
+    <div class="alert alert-danger custom-alert alert-dismissible fade show" role="alert">
+        <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <i class="fas fa-times-circle"></i> <!-- FontAwesome close icon -->
+        </button>
+    </div>
+<% } %>
+
+<!-- FontAwesome Icon CDN -->
+<script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
