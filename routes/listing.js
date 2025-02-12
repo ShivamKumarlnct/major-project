@@ -32,6 +32,7 @@ router.post("/",validateListing, wrapAsync(async (req, res) => {
     console.log(newlisting);
     
     await newlisting.save();
+    req.flash("success","Listing Credit");
     res.redirect("/listings");
 }));
 

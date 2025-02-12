@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodoverride = require('method-override');
 const ejsMate = require("ejs-mate");
-
+const session=require("express-session");
 const Review = require("./models/review.js");
 const Listing = require("./models/listing.js");
 const wrapAsync = require("./utils/wrapfunc.js");
@@ -12,7 +12,7 @@ const Expresserror = require("./utils/Expresserror.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
 const listings = require("./routes/listing.js");
 const reviews=require("./routes/review.js");
-
+const flash = require("connect-flash");
 app.use(methodoverride('_method'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -31,10 +31,36 @@ async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/wander');
 }
 
-// Home Route
+
+// use session
+
+const sessionOption = {
+    secret: "mysupersecrestring",
+    resave: false,
+    saveUninitialized: true,
+
+    cookie:{
+        expires:Date.now() + 1000*60*60*24*7,
+        maxAge:1000*60*60*24*7,
+        httpOnly:true
+    },
+  };
+
+  // Home Route
 app.get("/", (req, res) => {
     res.send("Hi, I'm the server");
 });
+
+
+app.use(session(sessionOption));
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+});
+
 
 
 
