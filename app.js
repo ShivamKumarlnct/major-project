@@ -10,8 +10,10 @@ const Listing = require("./models/listing.js");
 const wrapAsync = require("./utils/wrapfunc.js");
 const Expresserror = require("./utils/Expresserror.js");
 const { listingSchema, reviewSchema } = require("./schema.js");
-const listings = require("./routes/listing.js");
-const reviews=require("./routes/review.js");
+const listingsrouter = require("./routes/listing.js");
+const reviewsrouter=require("./routes/review.js");
+const Userrouter=require("./routes/user.js");
+
 const flash = require("connect-flash");
 app.use(methodoverride('_method'));
 app.use(express.urlencoded({ extended: true }));
@@ -20,6 +22,9 @@ app.engine('ejs', ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "/public")));
+const passport=require("passport");
+const LocalStraregy=require("passport-local");
+const User=require("./models/user.js");
 
 main().then(() => {
     console.log("Connected to DB");
@@ -53,16 +58,39 @@ app.get("/", (req, res) => {
 app.use(session(sessionOption));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStraregy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
 });
+// demoUser
+app.get("/demouser",async(req,res)=>{
+    let fakeUser = new User({
+        email:"student@gmail.com",
+        username:"delta-student"
+    });
+let registredUser=await User.register(fakeUser,"helloworld");
+    // console.log(registredUser);
+    res.send(registredUser);
+
+})
+
+
+
 
 
 // Use Listings Router
-app.use("/listings", listings);
-app.use("/listings/:id/reviews",reviews);
+app.use("/listings", listingsrouter);
+app.use("/listings/:id/reviews",reviewsrouter);
+app.use("/",Userrouter);
 
 
 // 404 Error Handling
