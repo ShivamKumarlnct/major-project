@@ -69,19 +69,20 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    res.locals.currUser=req.user;
     next();
 });
 // demoUser
-app.get("/demouser",async(req,res)=>{
-    let fakeUser = new User({
-        email:"student@gmail.com",
-        username:"delta-student"
-    });
-let registredUser=await User.register(fakeUser,"helloworld");
-    // console.log(registredUser);
-    res.send(registredUser);
+// app.get("/demouser",async(req,res)=>{
+//     let fakeUser = new User({
+//         email:"student@gmail.com",
+//         username:"delta-student"
+//     });
+// let registredUser=await User.register(fakeUser,"helloworld");
+//     // console.log(registredUser);
+//     res.send(registredUser);
 
-})
+// })
 
 
 
