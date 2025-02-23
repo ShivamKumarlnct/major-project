@@ -1,3 +1,8 @@
+if(process.env.NODE_ENV !== "production"){
+require('dotenv').config();
+}
+
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -72,6 +77,7 @@ app.use((req, res, next) => {
     res.locals.currUser=req.user;
     next();
 });
+
 // demoUser
 // app.get("/demouser",async(req,res)=>{
 //     let fakeUser = new User({
@@ -109,3 +115,5 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
     console.log("Server is running on port 8080");
 });
+
+

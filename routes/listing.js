@@ -7,10 +7,17 @@ const {isLoggedIn,isowner,validateListing}=require("../middleware.js");
 const { list } = require("parser");
 const listingController=require("../controller/listing.js");
 
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 router.route("/")
 .get(wrapAsync(listingController.index))
-.post(validateListing,isLoggedIn, wrapAsync(listingController.createlisting));
+// .post(validateListing,isLoggedIn, wrapAsync(listingController.createlisting));
+.post(upload.single('listing[image]'),(req,res)=>{
+    res.send(req.file);
+});
+
+
 
 //New listing form
 router.get("/new",isLoggedIn,wrapAsync(listingController.renderform));
