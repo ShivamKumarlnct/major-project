@@ -4,11 +4,13 @@ const wrapAsync = require("../utils/wrapfunc.js");
 
 const Listing = require("../models/listing.js");
 const {isLoggedIn,isowner,validateListing}=require("../middleware.js");
-const { list } = require("parser");
+// const { list } = require("parser");
 const listingController=require("../controller/listing.js");
 
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+
+const {storage} = require("../cloudconfig.js");
+const upload = multer({ storage });
 
 router.route("/")
 .get(wrapAsync(listingController.index))
