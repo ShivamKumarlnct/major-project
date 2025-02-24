@@ -56,9 +56,9 @@ const sessionOption = {
   };
 
   // Home Route
-app.get("/", (req, res) => {
-    res.send("Hi, I'm the server");
-});
+// app.get("/", (req, res) => {
+//     res.send("Hi, I'm the server");
+// });
 
 app.use(session(sessionOption));
 app.use(flash());
