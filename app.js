@@ -9,7 +9,10 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodoverride = require('method-override');
 const ejsMate = require("ejs-mate");
+
 const session=require("express-session");
+const MongoStore = require('connect-mongo');
+
 const Review = require("./models/review.js");
 const Listing = require("./models/listing.js");
 const wrapAsync = require("./utils/wrapfunc.js");
@@ -31,19 +34,33 @@ const passport=require("passport");
 const LocalStraregy=require("passport-local");
 const User=require("./models/user.js");
 
+const dburl=process.env.ATLAS_URI;
+
 main().then(() => {
     console.log("Connected to DB");
 }).catch(err => {
     console.log(err);
 });
 
+
 async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/wander');
+    await mongoose.connect(dburl);
 }
 
 // use session
+const store= MongoStore.create({
+    mongoUrl: dburl,
+    crypto: {
+        secret:"mysupersecrestring"
+      },
+    touchAfter: 24 * 3600,
+  });
+    store.on("error", function(e){
+        console.log("Session Store Error",e);
+    });
 
 const sessionOption = {
+    store,
     secret: "mysupersecrestring",
     resave: false,
     saveUninitialized: true,
@@ -54,6 +71,10 @@ const sessionOption = {
         httpOnly:true
     },
   };
+
+  
+
+
 
   // Home Route
 // app.get("/", (req, res) => {

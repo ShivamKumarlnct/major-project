@@ -1,28 +1,250 @@
 <% layout("/layouts/boilerplate") %>  
 
 <body>
-    <h1 class="text-center my-4">Our Destination</h1>
+  <style>
+    /* Filters Section */
+    #filters {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 5px;
+    }
 
-    <!-- Card Container -->
-    <div class="container">
-        <div class="row">
-          <% for(let listing of alllistings){ %>
-            <div class="col-md-4 mb-4">
-              <a href="/listings/<%= listing._id %>" class="card-link">
-                <div class="card">
-                  <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
-                  <div class="card-body">
-                    <p class="card-text">
-                      <strong><%= listing.title %></strong> <br>
-                      &#8377; <%= listing.price %>/night<br>
-                      <%= listing.location %> <br>
-                      <%= listing.country %> <br>
-                    </p>
-                  </div>
-                </div>
-              </a>
-            </div>
-          <% } %>
-        </div>
+    #filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Filter Icons */
+    .filter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 90px;
+      padding: 10px;
+      text-align: center;
+      opacity: 0.8;
+      transition: all 0.3s ease-in-out;
+      border-radius: 8px;
+    }
+
+    .filter:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+      cursor: pointer;
+      background: rgba(0, 123, 255, 0.1);
+    }
+
+    i {
+      font-size: 1.7rem;
+      color: #007bff;
+    }
+
+    .filter p {
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-top: 5px;
+      color: #333;
+    }
+
+    /* Tax Toggle */
+    .text-switch {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      border-color: 1px solid #ddd;
+    }
+
+    .form-check-label {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .tax-info {
+      display: none;
+      font-size: 0.9rem;
+      color: red;
+    }
+
+    /* Cards */
+    .card-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card {
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      background: #fff;
+      border: 1px solid #ddd;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: #555;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-price {
+      font-weight: bold;
+      color: #28a745;
+      font-size: 1rem;
+    }
+
+    .card-location {
+      font-size: 0.8rem;
+      color: #777;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .card-img-top {
+        height: 180px;
+      }
+
+      .card-body {
+        padding: 10px;
+      }
+
+      .card-title {
+        font-size: 0.9rem;
+      }
+
+      .card-text {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+
+      .filter {
+        flex: 0 0 auto;
+        width: 85px;
+      }
+
+      .text-switch {
+        margin-left: 10px;
+        
+      }
+
+      .card-img-top {
+        height: 160px;
+      }
+
+      .card-body {
+        padding: 10px;
+      }
+
+      .card-text {
+        flex-direction: column;
+        text-align: left;
+      }
+
+      .tax-info {
+        display: block;
+        text-align: right;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .card-title {
+        font-size: 0.85rem;
+      }
+
+      .card-price {
+        font-size: 0.9rem;
+      }
+
+      .card-text {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+
+  <!-- Filter Icons Section -->
+  <div id="filters">
+    <div class="filter"><div><i class="fa-solid fa-fire"></i><p>Trending</p></div></div>
+    <div class="filter"><div><i class="fa-solid fa-bed"></i><p>Room</p></div></div>
+    <div class="filter"><div><i class="fa-solid fa-building"></i><p>Iconic Cities</p></div></div>
+    <div class="filter"><div><i class="fa-solid fa-umbrella-beach"></i><p>Beach</p></div></div>
+    <div class="filter"><div><i class="fa-brands fa-untappd"></i><p>OMG!</p></div></div>
+    <div class="filter"><div><i class="fa-brands fa-fort-awesome"></i><p>Cabins</p></div></div>
+    <div class="filter"><div><i class="fa-solid fa-person-swimming"></i><p>Pool</p></div></div>
+    <div class="filter"><div><i class="fa-solid fa-tractor"></i><p>Farm</p></div></div>
+    <div class="filter"><div><i class="fa-solid fa-mountain-city"></i><p>Mountain</p></div></div>
+    <div class="filter"><div><i class="fa-solid fa-tree"></i><p>Forest</p></div></div>
+
+    <div class="text-switch"style="border-color: 1px solid #ddd;">
+      <div class="form-check-reverse form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Display total taxes</label>
+      </div>
     </div>
+  </div>
+
+  <!-- Card Container -->
+  <div class="container">
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 mt-3">
+      <% for(let listing of alllistings){ %>
+        <div class="col mb-4">
+          <a href="/listings/<%= listing._id %>" class="card-link">
+            <div class="card">
+              <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+              <div class="card-body">
+                <p class="card-title"><%= listing.title %></p>
+                <p class="card-price">&#8377; <%= listing.price %>/night</p>
+                <p class="card-location"><%= listing.location %></p>
+                <i class="tax-info"> &nbsp;&nbsp; +18% GST</i>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+
+  <script>
+    let taxSwitch = document.getElementById('flexSwitchCheckDefault');
+    taxSwitch.addEventListener("click", () => {
+      let taxInfo = document.getElementsByClassName('tax-info');
+      for (let tax of taxInfo) {
+        tax.style.display = (tax.style.display == "none" || tax.style.display == "") ? "inline" : "none";
+      }
+    });
+  </script>
 </body>

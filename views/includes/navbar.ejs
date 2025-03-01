@@ -1,3 +1,19 @@
+<style>
+  .btn-search {
+    background-color: #fe424d;
+    border-radius: 20px;
+  }
+  .btn-search :hover{
+    background-color: #fe424d;
+    color: white;
+  }
+  .form-control{
+    border-radius: 20px;
+
+  }
+
+ 
+</style>
 <nav class="navbar navbar-expand-md bg-light border-bottom sticky-top" id="mainNavbar">
   <div class="container-fluid">
     <!-- Brand Icon -->
@@ -19,6 +35,16 @@
         </li>
       </ul>
 
+      <!-- search-bar -->
+        <div class="navbar-nav ms-auto">
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-search "style="border-color:black" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+     
       <!-- Right Side - User Auth Links -->
       <ul class="navbar-nav ms-auto">
         <% if (!currUser) { %>
@@ -28,11 +54,11 @@
           <li class="nav-item">
             <a class="nav-link" href="/login" style="color:rgb(45, 43, 43)"><b>Login</b></a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="/listings/new" style="color: black; text-decoration: none;">
               <button class="btn btn-dark" style="border-radius: 10px; color: white;">Join in</button>
             </a>
-          </li>
+          </li> -->
           
         <% } else { %>
           <li class="nav-item dropdown">
@@ -42,6 +68,9 @@
             <ul class="dropdown-menu dropdown-menu-end custom-dropdown">
               <!-- <li><a class="dropdown-item" href="/profile">Profile</a></li> -->
               <li><a class="dropdown-item logout-btn" href="/logout">Logout</a></li>
+              <a class="nav-link" href="/listings/new" style="color: black; text-decoration: none;">
+                <button class="btn btn-dark" style="border-radius: 10px; color: white;">Join in</button>
+              </a>
             </ul>
           </li>
         <% } %>
@@ -56,7 +85,7 @@
 </nav>
 
 <!-- JavaScript for Dark Mode Toggle -->
-<script>
+<!-- <script>
   const themeToggle = document.getElementById("themeToggle");
   const navbar = document.getElementById("mainNavbar");
 
@@ -71,7 +100,7 @@
       themeToggle.textContent = "Dark Mode";
     }
   });
-</script>
+</script> -->
 
 <!-- CSS for Dropdown Styling & Dark Mode -->
 <style>
