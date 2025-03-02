@@ -102,6 +102,6 @@ app.listen(PORT, async () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 
     // Use dynamic import to avoid ESM error
-    const open = (await import('open')).default;
-    open(`http://localhost:${PORT}/listings`);
+    // const open = (await import('open')).default;
+    // open(`http://localhost:${PORT}/listings`);
 });
