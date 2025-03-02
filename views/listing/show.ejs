@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-
+        <% if(currUser &&  listing.owner._id.equals(currUser._id)){%>
         <div class="row justify-content-center mt-4">
             <div class="col-auto">
                 <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark">Edit</a>
@@ -32,6 +32,7 @@
                 </form>
             </div>
         </div>
+        <% }%>
 
         <br>
         <% if(currUser){ %>
